@@ -1,4 +1,8 @@
 {
+  "scripts": {
+    "test": "mocha test/**/*.test.js --timeout 10000",
+    "start": "node server.js"
+  },
   "dependencies": {
     "chai": "^5.2.1",
     "express": "^5.1.0",
