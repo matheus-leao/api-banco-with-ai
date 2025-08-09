@@ -48,6 +48,30 @@ describe('Transfer Controller', ()=>{
             expect(response.status).to.equal(400)
             expect(response.body).to.have.property('error', 'Usuário remetente ou destinatário não encontrado')
         })
+
+        it('Usando mocks: Quando informo valores válidos recebo 201', async ()=> {
+            // Criando mock
+            const transferServiceMock = sinon.stub(transferService, "createTransfer")
+            transferServiceMock.returns({
+                    from: "Julio",
+                    to: "Matheus",
+                    amount: 10000,
+                    date: new Date()
+            })
+
+            const response = await request(app)
+                .post('/transfer')
+                .send({                  
+                    from: "Julio",
+                    to: "Matheus",
+                    amount: 10000
+            });
+
+            expect(response.status).to.equal(201)
+            expect(response.body).to.have.property('from', 'Julio')
+            expect(response.body).to.have.property('to', 'Matheus')
+            expect(response.body).to.have.property('amount', 10000)
+        })
     })
     
     afterEach(()=>{
