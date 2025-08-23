@@ -50,7 +50,7 @@
           }
         },
         "responses": {
-          "200": { 
+          "200": {
             "description": "Login realizado",
             "content": {
               "application/json": {
