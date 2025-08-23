@@ -50,7 +50,20 @@
           }
         },
         "responses": {
-          "200": { "description": "Login realizado" },
+          "200": { 
+            "description": "Login realizado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string" },
+                    "token": { "type": "string" }
+                  }
+                }
+              }
+            }
+          },
           "401": { "description": "Credenciais inválidas" }
         }
       }
@@ -66,6 +79,11 @@
     "/transfer": {
       "post": {
         "summary": "Realizar transferência",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -84,16 +102,34 @@
         },
         "responses": {
           "201": { "description": "Transferência realizada" },
-          "400": { "description": "Erro de validação ou regra de negócio" }
+          "400": { "description": "Erro de validação ou regra de negócio" },
+          "401": { "description": "Não autorizado" },
+          "403": { "description": "Acesso negado" }
         }
       }
     },
     "/transfers": {
       "get": {
         "summary": "Consultar transferências",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "responses": {
-          "200": { "description": "Lista de transferências" }
+          "200": { "description": "Lista de transferências" },
+          "401": { "description": "Não autorizado" },
+          "403": { "description": "Acesso negado" }
         }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
       }
     }
   }

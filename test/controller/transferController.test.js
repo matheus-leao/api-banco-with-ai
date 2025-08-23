@@ -8,11 +8,20 @@ const app = require('../../app');
 // Mock
 const transferService = require('../../service/transferService')
 
+beforeEach( async()=>{
+  const responseLogin = await request(app).post("/login").send({
+        username: "matheus",
+        password: "1234",
+      });
+      expect(responseLogin.statusCode).to.equal(200, 'Login user 1 done')
+      bearerToken = responseLogin.body.token
+})
+
 // Testes
 describe('Transfer Controller', ()=>{
     describe('GET /transfers', ()=>{
         it('Buscar todas as transferências existentes', async ()=>{
-            const response = await request(app).get('/transfers');
+            const response = await request(app).get('/transfers').set('Authorization', `Bearer ${bearerToken}`);
             expect(response.statusCode).to.equal(200)
         })
     })
@@ -21,6 +30,7 @@ describe('Transfer Controller', ()=>{
         it('Quando informo remetente e destinatários inexistentes recebo 400', async ()=> {
             const response = await request(app)
                 .post('/transfer')
+                .set('Authorization', `Bearer ${bearerToken}`)
                 .send({                  
                     from: "Julio",
                     to: "Matheus",
@@ -37,6 +47,7 @@ describe('Transfer Controller', ()=>{
 
             const response = await request(app)
                 .post('/transfer')
+                .set('Authorization', `Bearer ${bearerToken}`)
                 .send({                  
                     from: "Julio",
                     to: "Matheus",
@@ -59,6 +70,7 @@ describe('Transfer Controller', ()=>{
 
             const response = await request(app)
                 .post('/transfer')
+                .set('Authorization', `Bearer ${bearerToken}`)
                 .send({                  
                     from: "julio",
                     to: "matheus",

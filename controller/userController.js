@@ -1,4 +1,5 @@
 const userService = require('../service/userService');
+const jwt = require('jsonwebtoken');
 
 exports.register = (req, res) => {
   try {
@@ -20,7 +21,8 @@ exports.login = (req, res) => {
       return res.status(400).json({ error: 'Usuário e senha são obrigatórios' });
     }
     const user = userService.authenticateUser(username, password);
-    res.json({ message: 'Login realizado com sucesso', user });
+    const token = jwt.sign({ username: user.username }, 'supersecret', { expiresIn: '1h' });
+    res.json({ message: 'Login realizado com sucesso', token });
   } catch (err) {
     res.status(401).json({ error: err.message });
   }
