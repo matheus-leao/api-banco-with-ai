@@ -22,7 +22,7 @@ describe("Transfer", () => {
       );
     });
 
-    it.only("Quando informo valores válidos recebo 201", async () => {
+    it("Quando informo valores válidos recebo 201", async () => {
       const responseCreateUser = await request(baseUrl).post("/register").send({
         username: "matheus",
         password: "1234",
