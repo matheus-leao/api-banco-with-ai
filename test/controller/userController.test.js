@@ -35,7 +35,6 @@ describe('User Controller', ()=>{
     describe('Users', ()=>{
         it('List all users', async ()=>{
             const response = await request(app).get('/users');
-            console.log(JSON.stringify(response))
             expect(response.statusCode).to.equal(200)
         })
     })    
