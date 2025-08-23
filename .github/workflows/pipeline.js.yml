@@ -36,3 +36,11 @@ jobs:
         with:
           name: mochawesome-report
           path: mochawesome-report/ # Path to your generated Mochawesome report directory
+
+      - uses: dorny/test-reporter@v2
+        name: Publish test results
+        with:
+          artifact: mochawesome-report           
+          name: Mocha Tests                 
+          path: 'mochawesome.json'    
+          reporter: mocha-json    
