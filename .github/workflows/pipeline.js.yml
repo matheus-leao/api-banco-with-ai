@@ -32,3 +32,5 @@ jobs:
     - run: npm start &
     - run: sleep 5
     - run: npm run test-external
+    - name: Run Mocha tests with GitHub Actions reporter
+      run: npx mocha --reporter mocha-github-actions-reporter
