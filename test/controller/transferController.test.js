@@ -51,8 +51,8 @@ describe('Transfer Controller', ()=>{
             // Criando mock
             const transferServiceMock = sinon.stub(transferService, "createTransfer")
             transferServiceMock.returns({
-                    from: "Julio",
-                    to: "Matheus",
+                    from: "julio",
+                    to: "matheus",
                     amount: 100,
                     date: new Date().toISOString()
             })
@@ -60,8 +60,8 @@ describe('Transfer Controller', ()=>{
             const response = await request(app)
                 .post('/transfer')
                 .send({                  
-                    from: "Julio",
-                    to: "Matheus",
+                    from: "julio",
+                    to: "matheus",
                     amount: 100
             });
 
