@@ -23,19 +23,6 @@ describe("Transfer", () => {
     });
 
     it("Quando informo valores válidos recebo 201", async () => {
-      const responseCreateUser = await request(baseUrl).post("/register").send({
-        username: "matheus",
-        password: "1234",
-        favorecido: true,
-      });
-      expect(responseCreateUser.statusCode).to.equal(201, 'User 1 created') 
-      const responseCreateUser2 = await request(baseUrl).post("/register").send({
-        username: "julio",
-        password: "1234",
-        favorecido: true,
-      });
-      expect(responseCreateUser.statusCode).to.equal(201, 'User 2 created')
-
       const responseLogin = await request(baseUrl).post("/login").send({
         username: "matheus",
         password: "1234",
@@ -47,8 +34,6 @@ describe("Transfer", () => {
         to: "matheus",
         amount: 100,
      });
-
-      console.log(response);
 
       const responseExpected = require("../fixture/answers/quandoInformoValoresValidos.json");
       delete response.body.date;
