@@ -8,9 +8,18 @@
   "dependencies": {
     "chai": "^5.2.1",
     "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
     "mocha": "^11.7.1",
     "sinon": "^21.0.0",
     "supertest": "^7.1.4",
     "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.34.0",
+    "@eslint/json": "^0.13.1",
+    "@eslint/markdown": "^7.2.0",
+    "eslint": "^9.34.0",
+    "eslint-plugin-react": "^7.37.5",
+    "globals": "^16.3.0"
   }
 }
