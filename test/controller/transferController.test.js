@@ -5,7 +5,6 @@ const { expect } = require('chai');
 
 // App
 const app = require('../../app');
-
 // Mock
 const transferService = require('../../service/transferService')
 
@@ -25,7 +24,7 @@ describe('Transfer Controller', ()=>{
                 .send({                  
                     from: "Julio",
                     to: "Matheus",
-                    amount: 10000
+                    amount: 100
             });
 
             expect(response.status).to.equal(400)
@@ -41,7 +40,7 @@ describe('Transfer Controller', ()=>{
                 .send({                  
                     from: "Julio",
                     to: "Matheus",
-                    amount: 10000
+                    amount: 100
             });
 
             expect(response.status).to.equal(400)
@@ -54,8 +53,8 @@ describe('Transfer Controller', ()=>{
             transferServiceMock.returns({
                     from: "Julio",
                     to: "Matheus",
-                    amount: 10000,
-                    date: new Date()
+                    amount: 100,
+                    date: new Date().toISOString()
             })
 
             const response = await request(app)
@@ -63,13 +62,15 @@ describe('Transfer Controller', ()=>{
                 .send({                  
                     from: "Julio",
                     to: "Matheus",
-                    amount: 10000
+                    amount: 100
             });
 
-            expect(response.status).to.equal(201)
-            expect(response.body).to.have.property('from', 'Julio')
-            expect(response.body).to.have.property('to', 'Matheus')
-            expect(response.body).to.have.property('amount', 10000)
+            
+            const responseExpected = require('../fixture/answers/quandoInformoValoresValidos.json');
+            delete response.body.date
+            delete responseExpected.date
+            expect(response.statusCode).to.equal(201)
+            expect(response.body).to.deep.equal(responseExpected)
         })
     })
     
