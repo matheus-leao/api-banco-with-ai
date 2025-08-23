@@ -51,8 +51,5 @@ describe("Transfer", () => {
       expect(response.statusCode).to.equal(201, "Transferencia realizada");
       expect(response.body).to.deep.equal(responseExpected);
     });
-    it(
-      "Usando Mocks: Quando informo remetente e destinatario inexistentes recebo 400",
-    );
   });
 });
