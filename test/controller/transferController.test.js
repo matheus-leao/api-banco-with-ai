@@ -8,12 +8,12 @@ const app = require('../../app');
 // Mock
 const transferService = require('../../service/transferService')
 
-beforeEach( async()=>{
+beforeEach(async()=>{
   const responseLogin = await request(app).post("/login").send({
         username: "matheus",
         password: "1234",
       });
-      expect(responseLogin.statusCode).to.equal(200, 'Login user 1 done')
+      expect(responseLogin.statusCode).to.equal(200, 'Login existent user done')
       bearerToken = responseLogin.body.token
 })
 
