@@ -1,13 +1,15 @@
 // Libs
 const request = require('supertest');
 const sinon = require('sinon')
-const { expect } = require('chai');
+const {expect} = require('chai');
 
+
+const baseUrl = 'http://localhost:3000';
 //tests
 describe('Transfer', ()=>{
     describe('POST /transfers', ()=>{
         it('Quando informo remetente e destinatários inexistentes recebo 400', async ()=> {
-            const response = await request('http://localhost:3000')
+            const response = await request(baseUrl)
                 .post('/transfer')
                 .send({                  
                     from: "Julio",
@@ -20,3 +22,4 @@ describe('Transfer', ()=>{
         })
     })
 })
+
