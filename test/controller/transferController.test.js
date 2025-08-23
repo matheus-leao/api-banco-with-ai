@@ -7,7 +7,6 @@ const { expect } = require('chai');
 const app = require('../../app');
 
 // Mock
-const userService = require('../../service/userService')
 const transferService = require('../../service/transferService')
 
 // Testes
