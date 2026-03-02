@@ -1,16 +1,19 @@
 import http from "k6/http";
 import { check, group } from "k6";
 import { Trend } from "k6/metrics";
-import { generateRandomEmail } from "./helpers/random-email.js";
-import { getBaseUrl } from "./helpers/base-url.js";
-import { login } from "./helpers/auth.js";
+import { generateRandomEmail } from "../helpers/random-email.js";
+import { getBaseUrl } from "../helpers/base-url.js";
+import { login } from "../helpers/auth.js";
 
 // Custom metric for checkout request duration
 const checkoutDuration = new Trend("checkout_duration");
 
 export const options = {
-  vus: 10,
-  duration: "15s",
+  stages: [
+    { duration: "2m", target: 50 },  // Ramp up to 50 VUs over 2 minutes
+    { duration: "3m", target: 50 },  // Stay at 50 VUs for 3 minutes
+    { duration: "1m", target: 0 },   // Ramp down to 0 VUs over 1 minute
+  ],
   thresholds: {
     http_req_duration: ["p(95)<2000"], // 95th percentile must be less than 2 seconds
   },

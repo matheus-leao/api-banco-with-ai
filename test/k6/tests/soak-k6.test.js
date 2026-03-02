@@ -1,9 +1,9 @@
 import http from "k6/http";
 import { check, group } from "k6";
 import { Trend } from "k6/metrics";
-import { generateRandomEmail } from "./helpers/random-email.js";
-import { getBaseUrl } from "./helpers/base-url.js";
-import { login } from "./helpers/auth.js";
+import { generateRandomEmail } from "../helpers/random-email.js";
+import { getBaseUrl } from "../helpers/base-url.js";
+import { login } from "../helpers/auth.js";
 
 // Custom metric for checkout request duration
 const checkoutDuration = new Trend("checkout_duration");
