@@ -1,0 +1,52 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: Pipeline
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [22.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+      - run: npm ci
+      - run: npm run build --if-present
+      - run: npm run test-controller
+      - run: npm start &
+      - run: sleep 5
+
+      - name: Setup Grafana k6
+        uses: grafana/setup-k6-action@v1.1.0
+
+      - name: Run Grafana k6 tests
+        uses: grafana/run-k6-action@v1.3.1
+        with:
+          # GitHub API Access Token
+          github-token: # default is ${{ github.token }}
+          # Path to the k6 test files
+          path: test/k6/tests
+          # If true, run tests locally instead and upload results to Grafana Cloud k6
+          cloud-run-locally: true # optional, default is true
+          # If true, comment the cloud test run URL on the pull request
+          cloud-comment-on-pr: true # optional, default is true
+          # If true, the output from k6 will be shown in the action logs, else only the summary will be shown
+          debug: true # optional, default is false
+
+          
+          
