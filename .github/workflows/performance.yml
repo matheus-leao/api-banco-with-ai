@@ -1,7 +1,7 @@
 # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
 
-name: Pipeline
+name: Performance Tests
 
 on:
   push:
@@ -45,8 +45,6 @@ jobs:
           cloud-run-locally: true # optional, default is true
           # If true, comment the cloud test run URL on the pull request
           cloud-comment-on-pr: true # optional, default is true
-          # If true, the output from k6 will be shown in the action logs, else only the summary will be shown
-          debug: true # optional, default is false
 
           
           
