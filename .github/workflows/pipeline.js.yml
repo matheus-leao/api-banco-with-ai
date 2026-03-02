@@ -31,3 +31,15 @@ jobs:
       - run: npm start &
       - run: sleep 5
       - run: npm run test-external
+      - name: Setup k6
+        run: sudo apt-get update && sudo apt-get install -y k6
+      - name: Run k6 tests - Checkout
+        run: k6 run test/k6/checkout.test.js
+      - name: Run k6 tests - Checkout Stress
+        run: k6 run test/k6/checkout-stress.test.js
+      - name: Run k6 tests - Checkout Spike
+        run: k6 run test/k6/checkout-spike.test.js
+      - name: Run k6 tests - Breakpoint
+        run: k6 run test/k6/breakpoint-k6-prompt.test.js
+      - name: Run k6 tests - Soak
+        run: k6 run test/k6/soak-k6.test.js
