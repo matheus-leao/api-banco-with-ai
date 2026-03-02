@@ -21,4 +21,4 @@ Regras:
 - Execute os testes depois de criar e analise se o percentil do tempo de resposta atende aos requisitos e me avise quanto a checks que porventura tenham falhado.
 
 Definicao: 
-Testes de breakpoint são testes que Aumente progressivamente o tráfego para descobrir os pontos de ruptura do sistema. 
+Testes de breakpoint são testes que aumentam progressivamente o tráfego para descobrir os pontos de ruptura do sistema. 
