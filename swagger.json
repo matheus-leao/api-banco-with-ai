@@ -6,6 +6,37 @@
     "description": "API para login, registro, consulta de usuários e transferência de valores."
   },
   "paths": {
+    "/auth/register": {
+      "post": {
+        "summary": "Registrar novo usuário",
+        "responses": {
+          "201": { "description": "Usuário registrado" },
+          "400": { "description": "Erro de validação ou usuário duplicado" }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "summary": "Login de usuário",
+        "responses": {
+          "200": {
+            "description": "Login realizado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string" },
+                    "token": { "type": "string" }
+                  }
+                }
+              }
+            }
+          },
+          "401": { "description": "Credenciais inválidas" }
+        }
+      }
+    },
     "/register": {
       "post": {
         "summary": "Registrar novo usuário",
@@ -65,6 +96,37 @@
             }
           },
           "401": { "description": "Credenciais inválidas" }
+        }
+      }
+    },
+    "/checkout": {
+      "post": {
+        "summary": "Realizar checkout",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "productId": { "type": "number" },
+                  "quantity": { "type": "number" },
+                  "paymentMethod": { "type": "string" }
+                },
+                "required": ["productId", "quantity", "paymentMethod"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Checkout realizado" },
+          "400": { "description": "Erro de validação" },
+          "401": { "description": "Não autorizado" }
         }
       }
     },
