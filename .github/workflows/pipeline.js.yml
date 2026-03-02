@@ -31,15 +31,24 @@ jobs:
       - run: npm start &
       - run: sleep 5
       - run: npm run test-external
-      - name: Setup k6
-        run: sudo apt-get update && sudo apt-get install -y k6
-      - name: Run k6 tests - Checkout
-        run: k6 run test/k6/checkout.test.js
-      - name: Run k6 tests - Checkout Stress
-        run: k6 run test/k6/checkout-stress.test.js
-      - name: Run k6 tests - Checkout Spike
-        run: k6 run test/k6/checkout-spike.test.js
-      - name: Run k6 tests - Breakpoint
-        run: k6 run test/k6/breakpoint-k6-prompt.test.js
-      - name: Run k6 tests - Soak
-        run: k6 run test/k6/soak-k6.test.js
+      - uses: grafana/setup-k6-action@v1
+        name: Setup K6
+
+      - uses: grafana/run-k6-action@v1
+        id: run_k6
+        name: Run k6 test
+        env:
+          BASE_URL: ${{ secrets.BASE_URL}}
+          K6_WEB_DASHBOARD: true
+          K6_WEB_DASHBOARD_EXPORT: html-report.html
+        with:
+          path: ./tests/k6/*.test.js
+          cloud-run-locally: true
+          cloud-comment-on-pr: true
+
+      - name: Upload artifact
+        id: deployment
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Directory containing the static site files
+          path: './report/'
